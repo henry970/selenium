@@ -1,0 +1,75 @@
+import time
+from selenium import webdriver
+from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+def send_keys_to_element(element, *keys):
+    element.send_keys(keys)
+
+def main():
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.get("https://www.jumia.com.ng/")
+    driver.maximize_window()
+    click_create_account = driver.find_element(By.XPATH, '//*[@id="jm"]/header/section/div[2]/div[1]/label')
+    click_create_account.click()
+
+    # sign in page
+    click_signin = driver.find_element(By.XPATH, '//*[@id="dpdw-login-box"]/div/div/a')
+    click_signin.click()
+
+    # Register
+    click_register = driver.find_element(By.XPATH, '//*[@id="login-with-phone"]/span[3]')
+    click_register.click()
+
+    # phone Number
+    send_keys_to_element(driver.find_element(By.NAME, "phone[number]"), "08147929520")
+
+    # click continue
+    click_continue = driver.find_element(By.XPATH, '/html/body/div/div[4]/form/div[2]/div[3]/div/button/span[3]')
+    click_continue.click()
+
+    # Create your account
+    send_keys_to_element(driver.find_element(By.NAME, "password"), "Adaobi93/")
+    time.sleep(4)
+    send_keys_to_element(driver.find_element(By.XPATH,'//*[@id="card_password"]/div[4]/label/input'), "Adaobi93/")
+    time.sleep(3)
+    continue1 = driver.find_element(By.XPATH, '//*[@id="card_password"]/div[5]/div/button/span[3]')
+    continue1.click()
+
+    # Personal details
+    send_keys_to_element(driver.find_element(By.NAME, "first_name"), "Henry")
+    send_keys_to_element(driver.find_element(By.NAME, "middle_name"), "Henmis")
+    send_keys_to_element(driver.find_element(By.NAME, "last_name"), "Okolie")
+    send_keys_to_element(driver.find_element(By.NAME, "email"), "okoliehenry91@gmail.com")
+    continue2 = driver.find_element(By.XPATH, '//*[@id="card_profile_details"]/div[6]/div/button/span[3]')
+    continue2.click()
+
+    # Personal details-2
+    gender = driver.find_element(By.XPATH, '//*[@id="gender"]/div[1]')
+    gender.click()
+    gender1 = driver.find_element(By.XPATH, '//*[@id="gender"]/div[2]/ul/li[2]')
+    gender1.click()
+    send_keys_to_element(driver.find_element(By.CSS_SELECTOR, '#input_birth_date'), "11/18/2004")
+    time.sleep(4)
+    check_box = driver.find_element(By.XPATH, '//*[@id="acceptTC"]')
+    check_box.click()
+    time.sleep(3)
+    continue3 = driver.find_element(By.XPATH, '//body/div[1]/div[4]/form[1]/div[1]/div[3]/div[1]/div[3]/div[1]')
+    continue3.click()
+
+    # Verification Code
+    send_keys_to_element(driver.find_element(By.XPATH, '//*[@id="card_otp"]/div[2]/div[1]/label[1]/input'), "2")
+    send_keys_to_element(driver.find_element(By.XPATH, '//*[@id="card_otp"]/div[2]/div[1]/label[2]/input'), "4")
+    send_keys_to_element(driver.find_element(By.XPATH, '//*[@id="card_otp"]/div[2]/div[1]/label[3]/input'), "6")
+    send_keys_to_element(driver.find_element(By.XPATH, '//*[@id="card_otp"]/div[2]/div[1]/label[4]/input'), "1")
+    submit = driver.find_element(By.XPATH, '//*[@id="card_otp"]/div[3]/div/button/span[3]')
+    submit.click()
+
+
+    time.sleep(200)
+
+
+if __name__ == '__main__':
+    main()
